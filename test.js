@@ -1,66 +1,66 @@
 var arr = [
   {
     id: 1,
-    a: "a"
+    letter: "a"
   },
   {
     pid: 1,
     id: 2,
-    b: "b"
+    letter: "b"
   },
   {
     pid: 1,
     id: 3,
-    c: "c"
+    letter: "c"
   },
   {
     pid: 3,
-    d: "d",
+    letter: "d",
     id: 4
   },
   {
     pid: 3,
-    e: "e",
+    letter: "e",
     id: 5
   },
   {
     pid: 3,
-    f: "g",
+    letter: "f",
     id: 6
   },
   {
     pid: 2,
-    g: "h",
+    letter: "g",
     id: 7
   },
   {
     pid: 2,
-    h: "g",
+    letter: "h",
     id: 8
   },
   {
     id: 9,
-    i: "i",
+    letter: "i",
     pid: 8
   },
   {
     id: 10,
-    j: "j",
+    letter: "j",
     pid: 8
   },
   {
     id: 11,
-    k: "k",
+    letter: "k",
     pid: 8
   },
   {
     id: 12,
-    l: "l",
+    letter: "l",
     pid: 8
   },
   {
     id: 12,
-    m: "m",
+    letter: "m",
     pid: 8
   }
 ];
@@ -88,6 +88,65 @@ function rapedfunction(arr) {
   return tree["0"]["1"];
 }
 
-console.log(rapedfunction(arr));
-document.body.innerHTML =
+const input = rapedfunction(arr);
+
+debugger;
+var finalResult;
+function recursiveFunctionForFindAnyLetter(array, target) {
+  var result = array;
+  if (result === target) {
+    finalResult = result;
+    return finalResult;
+  } else {
+    if (array.length) {
+      return finalResult;
+    } else {
+      array.children.forEach((item, i) => {
+        if (item.letter === target) {
+          result =
+            recursiveFunctionForFindAnyLetter(
+              item.letter,
+              target
+            ).toUpperCase() +
+            " This is Parent ID " +
+            item.pid +
+            " This is Child ID " +
+            item.id;
+        } else if (item.children.length > 0) {
+          item.children.map(item => {
+            if (item.children.length === 0) {
+              result =
+                recursiveFunctionForFindAnyLetter(
+                  item.letter,
+                  target
+                )+
+                " This is Parent ID " +
+                item.pid +
+                " This is Child ID " +
+                item.id;
+            } else {
+              item.children.map(
+                item =>
+                  (result =
+                    recursiveFunctionForFindAnyLetter(
+                      item.letter,
+                      target
+                    )+
+                    " This is Parent ID " +
+                    item.pid +
+                    " This is Child ID " +
+                    item.id)
+              );
+            }
+          });
+        }
+      });
+    }
+  }
+  return result;
+}
+document.body.innerHTML = `<h1>${recursiveFunctionForFindAnyLetter(input, "e")} </h1>`  // e This is Parent ID 3 This is Child ID 6
+
+// console.log(rapedfunction(arr));
+document.body.innerHTML +=
   "<pre>" + JSON.stringify(rapedfunction(arr), null, " ") + "</pre>";
