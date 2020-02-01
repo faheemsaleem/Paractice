@@ -90,12 +90,16 @@ function rapedfunction(arr) {
 
 const input = rapedfunction(arr);
 
-debugger;
+// debugger;
 var finalResult;
 function recursiveFunctionForFindAnyLetter(array, target) {
+  console.log(array.letter);
   var result = array;
-  if (result === target) {
-    finalResult = result;
+  if (array.letter === target) {
+    result = array.letter;
+    if (result === target) {
+      finalResult = result;
+    }
     return finalResult;
   } else {
     if (array.length) {
@@ -103,39 +107,21 @@ function recursiveFunctionForFindAnyLetter(array, target) {
     } else {
       array.children.forEach((item, i) => {
         if (item.letter === target) {
-          result =
-            recursiveFunctionForFindAnyLetter(
-              item.letter,
-              target
-            ).toUpperCase() +
-            " This is Parent ID " +
-            item.pid +
-            " This is Child ID " +
-            item.id;
+          result = recursiveFunctionForFindAnyLetter(
+            item.letter,
+            target
+          ).toUpperCase();
         } else if (item.children.length > 0) {
           item.children.map(item => {
             if (item.children.length === 0) {
-              result =
-                recursiveFunctionForFindAnyLetter(
-                  item.letter,
-                  target
-                )+
-                " This is Parent ID " +
-                item.pid +
-                " This is Child ID " +
-                item.id;
+              result = recursiveFunctionForFindAnyLetter(item.letter, target);
             } else {
               item.children.map(
                 item =>
-                  (result =
-                    recursiveFunctionForFindAnyLetter(
-                      item.letter,
-                      target
-                    )+
-                    " This is Parent ID " +
-                    item.pid +
-                    " This is Child ID " +
-                    item.id)
+                  (result = recursiveFunctionForFindAnyLetter(
+                    item.letter,
+                    target
+                  ))
               );
             }
           });
@@ -145,7 +131,10 @@ function recursiveFunctionForFindAnyLetter(array, target) {
   }
   return result;
 }
-document.body.innerHTML = `<h1>${recursiveFunctionForFindAnyLetter(input, "e")} </h1>`  // e This is Parent ID 3 This is Child ID 6
+document.body.innerHTML = `<h1>${recursiveFunctionForFindAnyLetter(
+  input,
+  "a"
+).toUpperCase()} </h1>`; // e This is Parent ID 3 This is Child ID 6
 
 // console.log(rapedfunction(arr));
 document.body.innerHTML +=
